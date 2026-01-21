@@ -13,26 +13,12 @@ module "network" {
   project_name        = "mythiqa"
 }
 
-/*
+module "backend_instance" {
+  source = "./modules/compute"
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name = "name"
-    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
-  }
-
-  owners = ["099720109477"]
+  instance_name     = "mythiqa_backend_instance"
+  instance_type     = "t3.micro"
+  ami               = "ami-06f1fc9ae5ae7f31e"
+  subnet_id         = module.network.backend_subnet_id
+  security_group_id = module.network.backend_sg_id
 }
-
-resource "aws_instance" "mythiqa_server" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t4g.nano"
-
-  tags = {
-    Name = "mythiqa-backend"
-  }
-}
-
-*/
