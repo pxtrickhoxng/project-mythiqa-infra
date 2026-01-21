@@ -2,6 +2,17 @@ provider "aws" {
   region = "us-east-2"
 }
 
+module "network" {
+  source = "./modules/network"
+
+  vpc_cidr            = "10.0.0.0/16"
+  public_subnet_cidr  = "10.0.1.0/24"
+  backend_subnet_cidr = "10.0.2.0/24"
+  rds_subnet_cidr     = "10.0.3.0/24"
+  availability_zone   = "us-east-2a"
+  project_name        = "mythiqa"
+}
+
 /*
 
 data "aws_ami" "ubuntu" {
