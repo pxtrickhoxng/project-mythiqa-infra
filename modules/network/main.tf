@@ -103,7 +103,7 @@ resource "aws_security_group" "backend_sg" {
 
 resource "aws_security_group" "rds_sg" {
   name        = "rds-sg"
-  description = "Allow MySQL traffic from backend only"
+  description = "Allow Postgres traffic from backend only"
   vpc_id      = aws_vpc.mythiqa_vpc.id
 
   ingress {
