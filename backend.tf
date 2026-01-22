@@ -1,5 +1,9 @@
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "terraform-state-bucket-mythiqa"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_s3_bucket_ownership_controls" "terraform_s3_ownership_controls" {
@@ -9,7 +13,7 @@ resource "aws_s3_bucket_ownership_controls" "terraform_s3_ownership_controls" {
   }
 }
 
-resource "aws_s3_bucket_acl" "example" {
+resource "aws_s3_bucket_acl" "terraform_s3_acl" {
   depends_on = [aws_s3_bucket_ownership_controls.terraform_s3_ownership_controls]
 
   bucket = aws_s3_bucket.terraform_state.id
