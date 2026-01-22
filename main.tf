@@ -16,6 +16,7 @@ module "network" {
 module "backend_instance" {
   source = "./modules/compute"
 
+  project_name      = "mythiqa"
   instance_name     = "mythiqa_backend_instance"
   instance_type     = "t3.micro"
   ami               = "ami-06f1fc9ae5ae7f31e"

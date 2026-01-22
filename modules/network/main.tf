@@ -34,6 +34,7 @@ resource "aws_internet_gateway" "gw" {
   tags   = { Name = "${var.project_name}_vpc-gw" }
 }
 
+// Public routes
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.mythiqa_vpc.id
 
@@ -48,6 +49,25 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "public_assoc" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
+}
+
+// Private routes
+resource "aws_route_table" "private_backend_rt" {
+  vpc_id = aws_vpc.mythiqa_vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw.id
+  }
+
+  tags = {
+    Name = "${var.project_name}-private-backend-rt"
+  }
+}
+
+resource "aws_route_table_association" "private_backend_assoc" {
+  subnet_id      = aws_subnet.private_backend.id
+  route_table_id = aws_route_table.private_backend_rt.id
 }
 
 # -------------------
@@ -112,4 +132,22 @@ resource "aws_security_group" "rds_sg" {
     protocol        = "tcp"
     security_groups = [aws_security_group.backend_sg.id]
   }
+}
+
+resource "aws_eip" "nat_eip" {
+  domain = "vpc"
+  tags = {
+    Name = "${var.project_name}-nat-eip"
+  }
+}
+
+resource "aws_nat_gateway" "nat_gw" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.public.id
+
+  tags = {
+    Name = "${var.project_name}-nat-gw"
+  }
+
+  depends_on = [aws_eip.nat_eip]
 }

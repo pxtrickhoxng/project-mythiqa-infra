@@ -1,5 +1,5 @@
 variable "instance_type" {
-  type = string
+  type    = string
   default = "t3.micro"
 }
 
@@ -16,6 +16,10 @@ variable "security_group_id" {
 }
 
 variable "ami" {
-  type = string
+  type    = string
   default = "ami-06f1fc9ae5ae7f31e"
+}
+
+variable "project_name" {
+  type = string
 }
