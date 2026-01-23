@@ -36,3 +36,7 @@ variable "desired_capacity" {
   default     = 2
   description = "Desired number of instances"
 }
+
+variable "target_group_arns" {
+  type = list(string)
+}

@@ -61,6 +61,7 @@ resource "aws_autoscaling_group" "backend" {
   vpc_zone_identifier = var.subnet_ids
   health_check_type   = "EC2"
   health_check_grace_period = 300
+  target_group_arns   = var.target_group_arns
 
   launch_template {
     id      = aws_launch_template.backend.id

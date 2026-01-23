@@ -17,6 +17,16 @@ module "network" {
   project_name            = "mythiqa"
 }
 
+module "alb" {
+  source = "./modules/alb"
+
+  project_name   = "mythiqa"
+  vpc_id         = module.network.vpc_id
+  alb_subnet_ids = module.network.alb_subnet_ids
+  alb_sg_id      = module.network.alb_sg_id
+  backend_port   = 8080
+}
+
 module "backend_asg" {
   source = "./modules/compute"
 
@@ -25,6 +35,7 @@ module "backend_asg" {
   instance_type     = "t3.micro"
   subnet_ids        = module.network.backend_subnet_ids
   security_group_id = module.network.backend_sg_id
+  target_group_arns = [module.alb.target_group_arn]
 
   min_size         = 2
   max_size         = 2
