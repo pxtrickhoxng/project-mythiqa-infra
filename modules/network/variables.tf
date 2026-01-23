@@ -2,17 +2,31 @@ variable "vpc_cidr" {
   type = string
 }
 
-variable "public_subnet_cidr" {
+variable "alb_subnet_cidr_az1" {
   type = string
 }
-variable "backend_subnet_cidr" {
-  type = string
-}
-variable "rds_subnet_cidr" {
+variable "alb_subnet_cidr_az2" {
   type = string
 }
 
-variable "availability_zone" {
+variable "backend_subnet_cidr_az1" {
+  type = string
+}
+variable "backend_subnet_cidr_az2" {
+  type = string
+}
+
+variable "rds_subnet_cidr_az1" {
+  type = string
+}
+variable "rds_subnet_cidr_az2" {
+  type = string
+}
+
+variable "availability_zone_1" {
+  type = string
+}
+variable "availability_zone_2" {
   type = string
 }
 
