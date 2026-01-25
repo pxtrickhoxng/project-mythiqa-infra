@@ -21,7 +21,7 @@ resource "aws_lb_target_group" "backend" {
     healthy_threshold   = 2
     interval            = 30
     matcher             = "200"
-    path                = "/health"
+    path                = "/api/home"
     port                = "traffic-port"
     timeout             = 5
     unhealthy_threshold = 2
