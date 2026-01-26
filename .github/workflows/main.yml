@@ -1,0 +1,31 @@
+name: Terraform Apply
+
+on:
+  repository_dispatch:
+    types: [deploy-backend]
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::078183418709:role/mythiqa-backend-workflow
+          aws-region: us-east-2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.5
+      
+      - name: Set Docker Image Tag
+        run: echo "DOCKER_IMAGE_TAG=${{ github.event.client_payload.docker_image_tag }}" >> $GITHUB_ENV
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var "docker_image_tag=$DOCKER_IMAGE_TAG"
