@@ -66,7 +66,7 @@ module "backend_instances" {
   region              = "us-east-2"
   account_id          = "078183418709"
   ecr_repository_name = "mythiqa-backend"
-  docker_image_tag    = "latest"
+  docker_image_tag    = var.docker_image_tag
   container_port      = 8080
 
   db_jdbc_url = module.database.jdbc_connection_string
@@ -77,4 +77,8 @@ module "backend_instances" {
   s3_bucket_name = "project-mythiqa-aws-s3"
 
   secrets_manager_secret_id = "mythiqa-secrets"
+}
+
+module "frontend_bucket" {
+  source = "./modules/storage"
 }

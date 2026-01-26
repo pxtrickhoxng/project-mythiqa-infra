@@ -48,7 +48,6 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 
 
 # EC2 Auto Scaling
-
 resource "aws_launch_template" "backend" {
   name_prefix   = "${var.project_name}-backend-"
   image_id      = var.ami
@@ -138,6 +137,14 @@ resource "aws_autoscaling_group" "backend" {
     value               = "${var.project_name}-backend-instance"
     propagate_at_launch = true
   }
+
+  instance_refresh {
+    strategy = "Rolling"
+
+    preferences {
+      min_healthy_percentage = 100
+      instance_warmup        = 120
+    }
 }
 
 /*
