@@ -15,6 +15,6 @@ This repository contains the **Terraform code** for the cloud infrastructure sup
 
 Three-tier architecture across multiple availability zones: ALB in public subnets routes traffic to EC2 instances in private subnets, which connect to RDS in isolated database subnets. NAT gateways provide outbound internet access for private resources.
 
-**Note**
+**Note**:
 This infrastructure is configured for development/demonstration purposes and is not production-ready.
 To save costs, all resources are disabled by default.
