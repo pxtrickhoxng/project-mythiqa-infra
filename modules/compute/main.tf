@@ -145,6 +145,7 @@ resource "aws_autoscaling_group" "backend" {
       min_healthy_percentage = 100
       instance_warmup        = 120
     }
+  }
 }
 
 /*
