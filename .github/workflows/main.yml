@@ -23,7 +23,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.7.5
+          terraform_version: 1.14.3
 
       - name: Set Docker Image Tag
         run: echo "DOCKER_IMAGE_TAG=${{ github.event.client_payload.docker_image_tag }}" >> $GITHUB_ENV
